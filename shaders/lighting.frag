@@ -32,6 +32,28 @@ void main (void){
     } else {
         
         // HW3: You will compute the lighting here.
+        vec4 p = modelview * position;
+        vec4 q = vec4(0,0,0,0);
+        vec4 SumLight = vec4(0,0,0,0);
+        vec3 n = vec3(0,0,0);
+        vec4 temp_v = (vec4(0,0,0,1)-p);
+        vec4 v = vec4(0,0,0,0);
+        vec3 lj = vec3(0,0,0);
+        vec3 hj = vec3(0,0,0);
         
+        for(int j = 0; j < maximal_allowed_lights;j++){
+            //R = E + sum(ambient + diffuse max + specular max)*l
+            
+            q = view * lightpositions[j];
+            n = normalize(inverse(transpose(mat3(modelview)))*normal);
+            lj = normalize((p.w * q.xyz)-(q.w*p.xyz));
+            v = normalize(temp_v);
+            hj = normalize(vec3(v)+lj);
+            SumLight += (ambient + (diffuse*max(dot(n,lj),0)) + specular*pow(max(dot(n,hj),0),shininess)) * lightcolors[j];
+
+        }
+        fragColor = emision + SumLight;
     }
+
+    
 }
