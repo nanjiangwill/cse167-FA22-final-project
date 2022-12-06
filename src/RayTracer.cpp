@@ -14,7 +14,7 @@ void RayTracer::Raytrace(Camera cam, RTScene rtscene, Image &image)
             cout << "first test before ray" << endl;
             Ray ray = RayThruPixel(cam, i, j, w, h);
             cout << "ray start point is : " << ray.p0[0] << endl;
-            Intersection hit = Intersect(ray, rtscene);
+            Intersection hit = Intersect(ray, &rtscene);
             cout << "test hit for intersection " << hit.dist << endl;
             image.pixels[j * w + i] = FindColor(hit, &rtscene, 2);
             cout << "test findcolor" << endl;
@@ -104,7 +104,7 @@ glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_d
     else
     {
         glm::vec3 color;
-        Material *m;
+        Material* m;
         std::map<std::string, Light *> light = scene->light;
         std::vector<glm::vec4> lightPositions;
         std::vector<glm::vec4> lightColors;
