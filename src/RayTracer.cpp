@@ -42,7 +42,8 @@ Ray RayTracer::RayThruPixel(Camera cam, int i, int j, int width, int height)
     return ray;
 
 } // page
-Intersection RayTracer::Intersect(Ray ray, Triangle *triangle)
+
+Intersection RayTracer::Intersect(Ray ray, Triangle* triangle)
 {
     Intersection intersection;
     intersection.triangle = triangle;
@@ -72,12 +73,12 @@ Intersection RayTracer::Intersect(Ray ray, Triangle *triangle)
     }
     return intersection;
 }
-Intersection RayTracer::Intersect(Ray ray, RTScene scene)
+Intersection RayTracer::Intersect(Ray ray, RTScene* scene)
 {
     float minDist = INFINITY;
     Intersection hit;
     hit.dist = minDist;
-    std::vector<Triangle> triangleList = scene.triangle_soup;
+    std::vector<Triangle> triangleList = scene->triangle_soup;
     Triangle *triangle;
     // cout << "triangele size is " << triangleList.size() << endl;
     for (int i = 0; i < triangleList.size(); i++)
@@ -127,7 +128,7 @@ glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_d
                                    glm::pow((lightPos.y - hit.P.y), 2) +
                                    glm::pow((lightPos.z - hit.P.z), 2));
 
-            if (Intersect(rayToLight, *scene).dist >= dist)
+            if (Intersect(rayToLight, scene).dist >= dist)
             {
                 glm::vec4 lightColor = lightColors[i];
                 glm::vec3 curColor = glm::vec3(m->ambient);
@@ -159,7 +160,7 @@ glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_d
         {
             ray2.p0 = hit.P;
             ray2.dir = 2.0f * glm::dot(hit.N, hit.V) * hit.N - hit.V;
-            hit2 = Intersect(ray2, *scene);
+            hit2 = Intersect(ray2, scene);
             glm::vec3 comp = FindColor(hit2, scene, recursion_depth - 1);
             color = color + comp;
         }
