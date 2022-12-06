@@ -12,9 +12,16 @@ Image is a class for a image object.
 #include <string>
 #include <map>
 #include <stack>
-using namespace std;
 
 #include <glm/gtx/string_cast.hpp>
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#include <OpenGL/glext.h>
+#include <GLUT/glut.h>
+#else
+#include <GL/glew.h>
+#include <GL/glut.h>
+#endif
 #ifndef __IMAGE_H__
 #define __IMAGE_H__
 
@@ -27,21 +34,19 @@ public:
     unsigned int fbo; // framebuffer object
     unsigned int tbo; // texture buffer object
     
-    Image(){    //Constructor
-        width = 0;
-        height = 0;
-        // pixels.resize(0, glm::vec3(0.0));
-    }
+    // Image(){    //Constructor
+    //     width = 0;
+    //     height = 0;
+    //     // pixels.resize(0, glm::vec3(0.0));
+    // }
     Image(int wid, int heig){ //copy Constructor
-        cout << wid << " " << heig << endl;
-        //wid = width;
+        // cout << wid << " " << heig << endl;
         width = wid;
-        //heig = height
         height = heig;
-        cout << wid * heig << endl;
-        pixels = std::vector<glm::vec3>(wid * heig, glm::vec3(0));
-        cout << pixels.size() << endl;
-        // pixels.resize(wid * heig, glm::vec3(0.0));
+        // cout << wid * heig << endl;
+        // pixels = std::vector<glm::vec3>(wid * heig, glm::vec3(0.0));
+        // cout << pixels.size() << endl;
+        pixels.resize(wid * heig, glm::vec3(0.0));
     }
 
     void init(void){
@@ -49,18 +54,17 @@ public:
         glGenTextures(1, &tbo);
     }
 
-    inline void test() {
-        pixels.clear();
-        for (size_t i = 0; i < 480000; i++) {
-            pixels.push_back(glm::vec3(1.0f, 0.0f, 0.0f));
-        }
-    }
+    // inline void test() {
+    //     pixels.clear();
+    //     for (size_t i = 0; i < 480000; i++) {
+    //         pixels.push_back(glm::vec3(1.0f, 0.0f, 0.0f));
+    //     }
+    // }
 
     void draw(void){
-        cout << pixels.size() << endl;
-        cout << glm::to_string(pixels[0]) << endl;
-        test();
-       
+        // cout << pixels.size() << endl;
+        // cout << glm::to_string(pixels[0]) << endl;
+        // test();
         glBindTexture(GL_TEXTURE_2D, tbo);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, // load texture
                      0, GL_RGB, GL_FLOAT, &pixels[0][0]);

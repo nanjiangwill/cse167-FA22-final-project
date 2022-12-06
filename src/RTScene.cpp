@@ -14,15 +14,12 @@ void RTScene::init(void)
     // Create a geometry palette
     geometry["cube"] = new RTCube;
     geometry["teapot"] = new RTObj;
-    geometry["bunny"] = new RTObj;
-    geometry["sphere"] = new RTObj;
+    // geometry["bunny"] = new RTObj;
+    // geometry["sphere"] = new RTObj;
     geometry["cube"]->init();
     geometry["teapot"]->init("models/teapot.obj");
-    geometry["bunny"]->init("models/bunny.obj");
-    geometry["sphere"]->init("models/sphere.obj");
-    // new geometra palette
-    //  geometry["bunny1"] = new Obj;
-    //  geometry["bunny1"] -> init("models/bunny.obj");
+    // geometry["bunny"]->init("models/bunny.obj");
+    // geometry["sphere"]->init("models/sphere.obj");
 
     // Create a material palette
     material["wood"] = new Material;
@@ -77,16 +74,16 @@ void RTScene::init(void)
     model["table piece"] = new RTModel;
     model["table piece"]->geometry = geometry["cube"];
     model["table piece"]->material = material["wood"];
-    model["bunny"] = new RTModel;
-    model["bunny"]->geometry = geometry["bunny"];
-    model["bunny"]->material = material["turquoise"];
+    // model["bunny"] = new RTModel;
+    // model["bunny"]->geometry = geometry["bunny"];
+    // model["bunny"]->material = material["turquoise"];
     model["bulb"] = new RTModel;
     model["bulb"]->geometry = geometry["sphere"];
     model["bulb"]->material = material["bulb"];
     // create a new model palette
-    model["bunny1"] = new RTModel;
-    model["bunny1"]->geometry = geometry["bunny"];
-    model["bunny1"]->material = material["white"];
+    // model["bunny1"] = new RTModel;
+    // model["bunny1"]->geometry = geometry["bunny"];
+    // model["bunny1"]->material = material["white"];
     model["floor"] = new RTModel;
     model["floor"]->geometry = geometry["cube"];
     model["floor"]->material = material["floor"];
@@ -100,14 +97,15 @@ void RTScene::init(void)
     light["bulb"]->color = 1.5f * vec4(1.0f, 0.2f, 0.1f, 1.0f);
 
     // Build the scene graph
-    // node["table"] = new Node;
-    // node["table top"] = new Node;
-    // node["table leg"] = new Node;
-    // node["teapot1"] = new Node;
-    // node["teapot2"] = new Node;
-    node["bunny"] = new RTNode;
+    node["table"] = new RTNode;
+    node["table top"] = new RTNode;
+    node["table leg"] = new RTNode;
+    // node["teapot1"] = new RTNode;
+    // node["teapot2"] = new RTNode;
+    // node["bunny"] = new RTNode;
+    
     // new scene graph
-    node["bunny1"] = new RTNode;
+    // node["bunny1"] = new RTNode;
     node["floor"] = new RTNode;
     // node["table"]->childnodes.push_back(node["table top"]);
     // node["table"]->childtransforms.push_back(translate(vec3(0.0f, 1.2f, 0.0f)));
@@ -135,22 +133,22 @@ void RTScene::init(void)
     // node["teapot2"]->models.push_back(model["teapot2"]);
     // node["teapot2"]->modeltransforms.push_back(scale(vec3(1.0f, 1.5f, 1.0f)) * scale(vec3(0.5f)));
 
-    node["bunny"]->models.push_back(model["bunny"]);
-    node["bunny"]->modeltransforms.push_back(scale(vec3(0.8f)) * translate(vec3(0.0f, 1.0f, 2.2f)));
+    // node["bunny"]->models.push_back(model["bunny"]);
+    // node["bunny"]->modeltransforms.push_back(scale(vec3(0.8f)) * translate(vec3(0.0f, 1.0f, 2.2f)));
 
-    node["bunny1"]->models.push_back(model["bunny1"]);
-    node["bunny1"]->modeltransforms.push_back(scale(vec3(0.8f)) * translate(vec3(0.0f, 1.0f, 0.0f)));
+    // node["bunny1"]->models.push_back(model["bunny1"]);
+    // node["bunny1"]->modeltransforms.push_back(scale(vec3(0.8f)) * translate(vec3(0.0f, 1.0f, 0.0f)));
     node["floor"]->models.push_back(model["floor"]);
     node["floor"]->modeltransforms.push_back(scale(vec3(5.0f, 0.05f, 5.0f)));
 
     // node["world"]->childnodes.push_back(node["table"]);
     // node["world"]->childtransforms.push_back(mat4(1.0f));
-    node["world"]->childnodes.push_back(node["bunny"]);
-    node["world"]->childtransforms.push_back(translate(vec3(-1.8f, 0.0f, 0.0f)) * rotate(90.0f * float(M_PI) / 180.0f, vec3(0.0f, 1.0f, 0.0f)));
+    // node["world"]->childnodes.push_back(node["bunny"]);
+    // node["world"]->childtransforms.push_back(translate(vec3(-1.8f, 0.0f, 0.0f)) * rotate(90.0f * float(M_PI) / 180.0f, vec3(0.0f, 1.0f, 0.0f)));
     node["world"]->models.push_back(model["bulb"]);
     node["world"]->modeltransforms.push_back(translate(vec3(2.0f, 2.0f, 0.0f)) * scale(vec3(0.6f)));
-    node["world"]->childnodes.push_back(node["bunny1"]);
-    node["world"]->childtransforms.push_back(translate(vec3(-1.8f, 0.0f, 0.0f)) * rotate(90.0f * float(M_PI) / 180.0f, vec3(0.0f, 1.0f, 0.0f)));
+    // node["world"]->childnodes.push_back(node["bunny1"]);
+    // node["world"]->childtransforms.push_back(translate(vec3(-1.8f, 0.0f, 0.0f)) * rotate(90.0f * float(M_PI) / 180.0f, vec3(0.0f, 1.0f, 0.0f)));
     node["world"]->childnodes.push_back(node["floor"]);
     node["world"]->childtransforms.push_back(translate(vec3(0.0f, -0.02f, 0.0f)));
 
@@ -169,96 +167,6 @@ void RTScene::init(void)
     shader->initUniforms();
 }
 
-// void Scene::draw(void)
-// {
-//     // Pre-draw sequence: assign uniforms that are the same for all Geometry::draw call.  These uniforms include the camera view, proj, and the lights.  These uniform do not include modelview and material parameters.
-//     camera->computeMatrices();
-//     shader->view = camera->view;
-//     shader->projection = camera->proj;
-//     shader->nlights = light.size();
-//     shader->lightpositions.resize(shader->nlights);
-//     shader->lightcolors.resize(shader->nlights);
-//     int count = 0;
-//     for (std::pair<std::string, Light *> entry : light)
-//     {
-//         shader->lightpositions[count] = (entry.second)->position;
-//         shader->lightcolors[count] = (entry.second)->color;
-//         count++;
-//     }
-
-//     // Define stacks for depth-first search (DFS)
-//     std::stack<Node *> dfs_stack;
-//     std::stack<mat4> matrix_stack; // HW3: You will update this matrix_stack during the depth-first search while loop.
-
-//     // Initialize the current state variable for DFS
-//     Node *cur = node["world"];  // root of the tree
-//     mat4 cur_VM = camera->view; // HW3: You will update this current modelview during the depth first search.  Initially, we are at the "world" node, whose modelview matrix is just camera's view matrix.
-
-//     //  HW3: The following is the beginning of the depth-first search algorithm.
-//     //  HW3: The depth-first search for the node traversal has already been implemented (cur, dfs_stack).
-//     //  HW3: All you have to do is to also update the states of (cur_VM, matrix_stack) alongside the traversal.  You will only need to modify starting from this line.
-//     dfs_stack.push(cur);
-//     /**
-//      * TODO: (HW3 hint: you should do something here)
-//      */
-//     matrix_stack.push(cur_VM);
-//     // Compute total number of connectivities in the graph; this would be an upper bound for
-//     // the stack size in the depth first search over the directed acyclic graph
-//     int total_number_of_edges = 0;
-//     for (const auto &n : node)
-//         total_number_of_edges += n.second->childnodes.size();
-
-//     // If you want to print some statistics of your scene graph
-//     // std::cout << "total numb of nodes = " << node.size() << std::endl;
-//     // std::cout << "total number of edges = " << total_number_of_edges << std::endl;
-
-//     while (!dfs_stack.empty())
-//     {
-//         // Detect whether the search runs into infinite loop by checking whether the stack is longer than the number of edges in the graph.
-//         if (dfs_stack.size() > total_number_of_edges)
-//         {
-//             std::cerr << "Error: The scene graph has a closed loop." << std::endl;
-//             exit(-1);
-//         }
-
-//         // top-pop the stacks
-//         cur = dfs_stack.top();
-//         dfs_stack.pop();
-//         /**
-//          * TODO: (HW3 hint: you should do something here)
-//          */
-//         cur_VM = matrix_stack.top();
-//         matrix_stack.pop();
-//         // draw all the models at the current node
-//         for (size_t i = 0; i < cur->models.size(); i++)
-//         {
-//             // Prepare to draw the geometry. Assign the modelview and the material.
-
-//             /**
-//              * TODO: (HW3 hint: you should do something here)
-//              */
-
-//             shader->modelview = cur_VM * cur->modeltransforms[i]; // TODO: HW3: Without updating cur_VM, modelview would just be camera's view matrix.
-//             shader->material = (cur->models[i])->material;
-
-//             // The draw command
-//             shader->setUniforms();
-//             (cur->models[i])->geometry->draw();
-//         }
-
-//         // Continue the DFS: put all the child nodes of the current node in the stack
-//         for (size_t i = 0; i < cur->childnodes.size(); i++)
-//         {
-//             dfs_stack.push(cur->childnodes[i]);
-//             /**
-//              * TODO: (HW3 hint: you should do something here)
-//              */
-//             matrix_stack.push(cur_VM * cur->childtransforms[i]);
-//         }
-
-//     } // End of DFS while loop.
-//     // HW3: Your code will only be above this line.
-// }
 
 void RTScene::buildTriangleSoup(){
     // Pre-draw sequence: assign uniforms that are the same for all Geometry::draw call.  These uniforms include the camera view, proj, and the lights.  These uniform do not include modelview and material parameters.

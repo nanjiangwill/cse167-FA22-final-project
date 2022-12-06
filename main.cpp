@@ -17,14 +17,13 @@
 #include "Image.h"
 #include "RTScene.h"
 #include "RayTracer.h"
-static const int width = 800;
-static const int height = 600;
+static const int width = 250;
+static const int height = 188;
 static const char* title = "Scene viewer";
 static const glm::vec4 background(0.1f, 0.2f, 0.3f, 1.0f);
 static Scene scene;
 static Image image(width, height);
 static RTScene rtscene;
-static Camera cam;
 
 // static RayTracer raytracter();
 static bool imageMode = false;
@@ -55,16 +54,15 @@ void initialize(void){
     // Initialize scene
     //scene.init();
     image.init();
-    for (int i = 0; i < width * height;i++){
-        image.pixels[i] = glm::vec3(1,0,0);
-    }
+    // for (int i = 0; i < width * height;i++){
+    //     image.pixels[i] = glm::vec3(1,0,0);
+    // }
     rtscene.init();
     rtscene.buildTriangleSoup();
     RayTracer::Raytrace(*(rtscene.camera), rtscene, image);
+
     // Enable depth test
     glEnable(GL_DEPTH_TEST);  
-    
-    
 }
 void Imagedisplay(void)
 {
@@ -114,7 +112,7 @@ void keyboard(unsigned char key, int x, int y){
         case 'i':
             imageMode = !imageMode;
             
-            Imagedisplay();
+            // Imagedisplay();
             glutPostRedisplay();
             break;
         case 'r':
