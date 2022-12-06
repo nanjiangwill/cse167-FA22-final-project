@@ -23,7 +23,7 @@ RayTracer.o: src/RayTracer.cpp include/RayTracer.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/RayTracer.cpp
 RTObj.o: src/RTObj.cpp include/RTObj.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/RTObj.cpp
-RTScene.o: src/RTScene.cpp include/RTScene.h
+RTScene.o: src/RTScene.cpp src/RTScene.inl include/RTScene.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/RTScene.cpp	
 clean: 
 	$(RM) *.o SceneViewer
