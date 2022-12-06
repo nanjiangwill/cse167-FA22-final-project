@@ -17,8 +17,8 @@
 #include "Image.h"
 #include "RTScene.h"
 #include "RayTracer.h"
-static const int width = 250;
-static const int height = 188;
+static const int width = 100;
+static const int height = 100;
 static const char* title = "Scene viewer";
 static const glm::vec4 background(0.1f, 0.2f, 0.3f, 1.0f);
 static Scene scene;
@@ -52,42 +52,58 @@ void initialize(void){
     glViewport(0,0,width,height);
     
     // Initialize scene
-    //scene.init();
+    scene.init();
     image.init();
     // for (int i = 0; i < width * height;i++){
     //     image.pixels[i] = glm::vec3(1,0,0);
     // }
     rtscene.init();
+    rtscene.camera->zoom(0.3f);
+    rtscene.camera->rotateRight(20);
+    rtscene.camera->rotateUp(10);
     rtscene.buildTriangleSoup();
     RayTracer::Raytrace(*(rtscene.camera), rtscene, image);
 
     // Enable depth test
     glEnable(GL_DEPTH_TEST);  
 }
-void Imagedisplay(void)
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    // if(!imageMode){
-    //    scene.draw();
-    // }
-    // else{
-    //   image.draw();
-    // }
-    image.draw();
-    glutSwapBuffers();
-    glFlush();
-}
+// void Imagedisplay(void)
+// {
+//     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//     // if(!imageMode){
+//     //    scene.draw();
+//     // }
+//     // else{
+//     //   image.draw();
+//     // }
+//     image.draw();
+//     glutSwapBuffers();
+//     glFlush();
+// }
 void display(void){
-    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     // // if(!imageMode){
     // //    scene.draw(); 
     // // }
     // // else{
     // //   image.draw();
     // // }
-   
+    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    if (imageMode)
+    {
+        image.draw();
+    }
+    else
+    {
+        scene.draw();
+    }
+
     // glutSwapBuffers();
     // glFlush();
+    //image.draw();
+    glutSwapBuffers();
+    glFlush();
     
 }
 

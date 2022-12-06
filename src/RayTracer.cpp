@@ -1,49 +1,48 @@
 #include "RayTracer.h"
 using namespace RayTracer;
 using namespace std;
-
+using namespace glm;
 void RayTracer::Raytrace(Camera cam, RTScene rtscene, Image &image)
 {
-    int w = image.width;
-    int h = image.height;
-    for (int j = 0; j < h; j++)
+    int Width = image.width;
+    int Height = image.height;
+    for (int j = 0; j < GLUT_WINDOW_HEIGHT; j++)
     {
-        for (int i = 0; i < w; i++)
+        for (int i = 0; i < Width; i++)
         {
-            cout << "Round" << endl;
-            cout << "first test before ray" << endl;
-            Ray ray = RayThruPixel(cam, i, j, w, h);
-            cout << "ray start point is : " << ray.p0[0] << endl;
+            // cout << "Round" << endl;
+            // cout << "first test before ray" << endl;
+            Ray ray = RayThruPixel(cam, i, j, Width, Height);
+            // cout << "ray start point is : " << ray.p0[0] << endl;
             Intersection hit = Intersect(ray, &rtscene);
-            cout << "test hit for intersection " << hit.dist << endl;
-            image.pixels[j * w + i] = FindColor(hit, &rtscene, 2);
-            cout << "test findcolor" << endl;
-            cout << "" << endl;
+            // cout << "test hit for intersection " << hit.dist << endl;
+            image.pixels[j * Width + i] = FindColor(hit, &rtscene, 3);
+            // cout << "test findcolor" << endl;
+            // cout << "" << endl;
         }
     }
 }
+
 Ray RayTracer::RayThruPixel(Camera cam, int i, int j, int width, int height)
 {
     Ray ray;
-    glm::vec3 CamEye = cam.eye;
-    glm::vec3 CamTarget = cam.target;
-    glm::vec3 CamUp = cam.up;
-    float aspect = cam.aspect;
-    float fovy = cam.fovy;
+    vec3 CamEye = cam.eye;
+    vec3 CamTarget = cam.target;
+    vec3 CamUp = cam.up;
+    float alpha = 2 * (i + 0.5) / width - 1;
+    float beta = 1 - 2 * (j + 0.5) / height;
+    float Aspect = cam.aspect;
+    float Fovy = cam.fovy;
+    vec3 w = glm::normalize(CamEye - CamTarget);
+    vec3 u = glm::normalize(cross(CamUp, w));
+    vec3 v = glm::cross(w, u);
+    vec3 d = glm::normalize(-alpha * Aspect * tan(Fovy / 2) * u + beta * tan(Fovy / 2) * v - w);
 
-    glm::vec3 w = glm::normalize(CamEye - CamTarget);
-    glm::vec3 u = glm::normalize(glm::cross(CamUp, w));
-    glm::vec3 v = glm::cross(w, u);
-    float alpha = 2 * ((i + 0.5) / width) - 1;
-    float beta = 1 - 2 * ((j + 0.5) / height);
-    glm::vec3 d = glm::normalize(alpha * aspect * (glm::tan(fovy / 2) * u) + beta * (glm::tan(fovy / 2) * v - w));
     ray.p0 = CamEye;
     ray.dir = d;
     return ray;
-
-} // page
-
-Intersection RayTracer::Intersect(Ray ray, Triangle* triangle)
+}
+Intersection RayTracer::Intersect(Ray ray, Triangle *triangle)
 {
     Intersection intersection;
     intersection.triangle = triangle;
@@ -73,7 +72,7 @@ Intersection RayTracer::Intersect(Ray ray, Triangle* triangle)
     }
     return intersection;
 }
-Intersection RayTracer::Intersect(Ray ray, RTScene* scene)
+Intersection RayTracer::Intersect(Ray ray, RTScene *scene)
 {
     float minDist = INFINITY;
     Intersection hit;
@@ -92,7 +91,7 @@ Intersection RayTracer::Intersect(Ray ray, RTScene* scene)
             hit = hit_temp;
         }
     }
-    cout << "final dist is " << hit.dist << endl;
+    // cout << "final dist is " << hit.dist << endl;
     return hit;
 }
 glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_depth)
