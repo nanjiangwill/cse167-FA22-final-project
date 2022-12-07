@@ -17,6 +17,7 @@ void RayTracer::Raytrace(Camera cam, RTScene rtscene, Image &image)
             Intersection hit = Intersect(ray, &rtscene);
             // cout << "test hit for intersection " << hit.dist << endl;
             image.pixels[j * Width + i] = FindColor(hit, &rtscene, 3);
+            cout << (j * Width + i) << endl;
             // cout << "test findcolor" << endl;
             // cout << "" << endl;
         }
@@ -95,7 +96,8 @@ Intersection RayTracer::Intersect(Ray ray, RTScene *scene)
     return hit;
 }
 glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_depth)
-{
+{ 
+    glm::vec4 color;         
     if (hit.dist == INFINITY)
     {
         return glm::vec3(0.0f);
@@ -103,7 +105,7 @@ glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_d
     else
     {
         glm::vec3 color;
-        Material* m;
+        Material *m;
         std::map<std::string, Light *> light = scene->light;
         std::vector<glm::vec4> lightPositions;
         std::vector<glm::vec4> lightColors;
@@ -121,8 +123,9 @@ glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_d
         {
             glm::vec4 lightPos = lightPositions[i];
             Ray rayToLight;
-            rayToLight.p0 = hit.P;
-            rayToLight.dir = glm::normalize(glm::vec3(lightPos - glm::vec4(hit.P, 1)));
+    
+            rayToLight.dir = glm::normalize(glm::vec3(lightPos - glm::vec4(hit.P, 1)));       
+             rayToLight.p0 = hit.P + vec3(0.1f)* rayToLight.dir;
             float dist = glm::sqrt(glm::pow((lightPos.x - hit.P.x), 2) +
                                    glm::pow((lightPos.y - hit.P.y), 2) +
                                    glm::pow((lightPos.z - hit.P.z), 2));
@@ -157,8 +160,9 @@ glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_d
         // specular component (recursive)
         if (recursion_depth > 0)
         {
-            ray2.p0 = hit.P;
+            //ray2.p0 = hit.P;
             ray2.dir = 2.0f * glm::dot(hit.N, hit.V) * hit.N - hit.V;
+            ray2.p0 = hit.P + vec3(0.1f) * ray2.dir;
             hit2 = Intersect(ray2, scene);
             glm::vec3 comp = FindColor(hit2, scene, recursion_depth - 1);
             color = color + comp;

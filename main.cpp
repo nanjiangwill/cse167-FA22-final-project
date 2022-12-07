@@ -17,16 +17,14 @@
 #include "Image.h"
 #include "RTScene.h"
 #include "RayTracer.h"
-static const int width = 100;
-static const int height = 100;
+static const int width = 800;
+static const int height = 600;
 static const char* title = "Scene viewer";
 static const glm::vec4 background(0.1f, 0.2f, 0.3f, 1.0f);
 static Scene scene;
 static Image image(width, height);
 static RTScene rtscene;
 
-// static RayTracer raytracter();
-static bool imageMode = false;
 #include "hw3AutoScreenshots.h"
 using namespace std;
 void printHelp()
@@ -40,7 +38,6 @@ void printHelp()
       press 'A'/'Z' to zoom.
       press 'R' to reset camera.
       press 'L' to turn on/off the lighting.
-      press 'I' to turn on/off the image
       press Spacebar to generate images for hw3 submission.
     
 )";
@@ -58,9 +55,9 @@ void initialize(void){
     //     image.pixels[i] = glm::vec3(1,0,0);
     // }
     rtscene.init();
-    rtscene.camera->zoom(0.3f);
-    rtscene.camera->rotateRight(20);
-    rtscene.camera->rotateUp(10);
+     rtscene.camera->zoom(0.2f);
+    rtscene.camera->rotateRight(0.0f);
+    rtscene.camera->rotateUp(0.0f);
     rtscene.buildTriangleSoup();
     RayTracer::Raytrace(*(rtscene.camera), rtscene, image);
 
@@ -82,22 +79,10 @@ void initialize(void){
 // }
 void display(void){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    // // if(!imageMode){
-    // //    scene.draw(); 
-    // // }
-    // // else{
-    // //   image.draw();
-    // // }
-    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    if (imageMode)
-    {
-        image.draw();
-    }
-    else
-    {
-        scene.draw();
-    }
+    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    image.draw();
+
 
     // glutSwapBuffers();
     // glFlush();
@@ -124,12 +109,6 @@ void keyboard(unsigned char key, int x, int y){
             break;
         case 'o': // save screenshot
             saveScreenShot();
-            break;
-        case 'i':
-            imageMode = !imageMode;
-            
-            // Imagedisplay();
-            glutPostRedisplay();
             break;
         case 'r':
             scene.camera -> aspect_default = float(glutGet(GLUT_WINDOW_WIDTH))/float(glutGet(GLUT_WINDOW_HEIGHT));
