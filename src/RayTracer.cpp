@@ -124,8 +124,10 @@ glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_d
             glm::vec4 lightPos = lightPositions[i];
             Ray rayToLight;
     
-            rayToLight.dir = glm::normalize(glm::vec3(lightPos - glm::vec4(hit.P, 1)));       
-             rayToLight.p0 = hit.P + vec3(0.9f)* rayToLight.dir;
+
+
+            rayToLight.dir = glm::normalize(glm::vec3(lightPos - lightPos.w * hit.N));       
+            rayToLight.p0 = hit.P + 0.9f * rayToLight.dir;
             float dist = glm::sqrt(glm::pow((lightPos.x - hit.P.x), 2) +
                                    glm::pow((lightPos.y - hit.P.y), 2) +
                                    glm::pow((lightPos.z - hit.P.z), 2));
