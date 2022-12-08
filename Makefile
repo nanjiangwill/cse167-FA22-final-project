@@ -15,10 +15,6 @@ Shader.o: src/Shader.cpp
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Shader.cpp
 Camera.o: src/Camera.cpp include/Camera.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Camera.cpp
-# Obj.o: src/Obj.cpp include/Obj.h
-# 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Obj.cpp
-# Scene.o: src/Scene.cpp src/Scene.inl include/Scene.h
-# 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Scene.cpp
 RayTracer.o: src/RayTracer.cpp include/RayTracer.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/RayTracer.cpp
 RTObj.o: src/RTObj.cpp include/RTObj.h
