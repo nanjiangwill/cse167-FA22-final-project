@@ -13,19 +13,16 @@
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include "Screenshot.h"
-#include "Scene.h"
 #include "Image.h"
 #include "RTScene.h"
 #include "RayTracer.h"
-static const int width = 400;
-static const int height = 300;
+static const int width = 80;
+static const int height = 60;
 static const char* title = "Scene viewer";
 static const glm::vec4 background(0.1f, 0.2f, 0.3f, 1.0f);
-static Scene scene;
 static Image image(width, height);
 static RTScene rtscene;
 
-#include "hw3AutoScreenshots.h"
 using namespace std;
 void printHelp()
 {
@@ -48,11 +45,10 @@ void initialize(void){
     glClearColor(background[0], background[1], background[2], background[3]); // background color
     glViewport(0,0,width,height);
     
-    // Initialize scene
-    scene.init();
+    // Initialize image
     image.init();
     rtscene.init();
-     rtscene.camera->zoom(0.19f);
+    rtscene.camera->zoom(0.19f);
     rtscene.camera->rotateRight(10.0f);
     rtscene.camera->rotateUp(5.0f);
     rtscene.buildTriangleSoup();
@@ -91,24 +87,24 @@ void keyboard(unsigned char key, int x, int y){
             saveScreenShot();
             break;
         case 'r':
-            scene.camera -> aspect_default = float(glutGet(GLUT_WINDOW_WIDTH))/float(glutGet(GLUT_WINDOW_HEIGHT));
-            scene.camera -> reset();
+            // scene.camera -> aspect_default = float(glutGet(GLUT_WINDOW_WIDTH))/float(glutGet(GLUT_WINDOW_HEIGHT));
+            // scene.camera -> reset();
             glutPostRedisplay();
             break;
         case 'a':
-            scene.camera -> zoom(0.9f);
+           // scene.camera -> zoom(0.9f);
             glutPostRedisplay();
             break;
         case 'z':
-            scene.camera -> zoom(1.1f);
+            //scene.camera -> zoom(1.1f);
             glutPostRedisplay();
             break;
         case 'l':
-            scene.shader -> enablelighting = !(scene.shader -> enablelighting);
+            //scene.shader -> enablelighting = !(scene.shader -> enablelighting);
             glutPostRedisplay();
             break;
         case ' ':
-            hw3AutoScreenshots();
+            //hw3AutoScreenshots();
             glutPostRedisplay();
             break;
         default:
@@ -119,19 +115,19 @@ void keyboard(unsigned char key, int x, int y){
 void specialKey(int key, int x, int y){
     switch (key) {
         case GLUT_KEY_UP: // up
-            scene.camera -> rotateUp(-10.0f);
+            //scene.camera -> rotateUp(-10.0f);
             glutPostRedisplay();
             break;
         case GLUT_KEY_DOWN: // down
-            scene.camera -> rotateUp(10.0f);
+            //scene.camera -> rotateUp(10.0f);
             glutPostRedisplay();
             break;
         case GLUT_KEY_RIGHT: // right
-            scene.camera -> rotateRight(-10.0f);
+           // scene.camera -> rotateRight(-10.0f);
             glutPostRedisplay();
             break;
         case GLUT_KEY_LEFT: // left
-            scene.camera -> rotateRight(10.0f);
+           // scene.camera -> rotateRight(10.0f);
             glutPostRedisplay();
             break;
     }

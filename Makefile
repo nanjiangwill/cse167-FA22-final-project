@@ -7,18 +7,18 @@ LDFLAGS = -framework GLUT -framework OpenGL -L$(BREWPATH)/lib -lfreeimage
 
 RM = /bin/rm -f
 all: SceneViewer
-SceneViewer: main.o Shader.o Camera.o Obj.o Scene.o RayTracer.o RTObj.o RTScene.o shaders/lighting.frag shaders/projective.vert
-	$(CC) -o SceneViewer main.o Shader.o Camera.o Obj.o Scene.o RayTracer.o RTObj.o RTScene.o $(LDFLAGS)
-main.o: main.cpp include/hw3AutoScreenshots.h
+SceneViewer: main.o Shader.o Camera.o RayTracer.o RTObj.o RTScene.o shaders/lighting.frag shaders/projective.vert
+	$(CC) -o SceneViewer main.o Shader.o Camera.o RayTracer.o RTObj.o RTScene.o $(LDFLAGS)
+main.o: main.cpp 
 	$(CC) $(CFLAGS) $(INCFLAGS) -c main.cpp 
 Shader.o: src/Shader.cpp
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Shader.cpp
 Camera.o: src/Camera.cpp include/Camera.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Camera.cpp
-Obj.o: src/Obj.cpp include/Obj.h
-	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Obj.cpp
-Scene.o: src/Scene.cpp src/Scene.inl include/Scene.h
-	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Scene.cpp
+# Obj.o: src/Obj.cpp include/Obj.h
+# 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Obj.cpp
+# Scene.o: src/Scene.cpp src/Scene.inl include/Scene.h
+# 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Scene.cpp
 RayTracer.o: src/RayTracer.cpp include/RayTracer.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/RayTracer.cpp
 RTObj.o: src/RTObj.cpp include/RTObj.h
