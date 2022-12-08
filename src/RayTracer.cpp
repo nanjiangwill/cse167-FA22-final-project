@@ -6,7 +6,7 @@ void RayTracer::Raytrace(Camera cam, RTScene rtscene, Image &image)
 {
     int Width = image.width;
     int Height = image.height;
-    for (int j = 0; j < GLUT_WINDOW_HEIGHT; j++)
+    for (int j = 0; j < Height; j++)
     {
         for (int i = 0; i < Width; i++)
         {
@@ -16,7 +16,7 @@ void RayTracer::Raytrace(Camera cam, RTScene rtscene, Image &image)
             // cout << "ray start point is : " << ray.p0[0] << endl;
             Intersection hit = Intersect(ray, &rtscene);
             // cout << "test hit for intersection " << hit.dist << endl;
-            image.pixels[j * Width + i] = FindColor(hit, &rtscene, 3);
+            image.pixels[j * Width + i] = FindColor(hit, &rtscene, 60);
             cout << (j * Width + i) << endl;
             // cout << "test findcolor" << endl;
             // cout << "" << endl;
@@ -125,7 +125,7 @@ glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_d
             Ray rayToLight;
     
             rayToLight.dir = glm::normalize(glm::vec3(lightPos - glm::vec4(hit.P, 1)));       
-             rayToLight.p0 = hit.P + vec3(0.1f)* rayToLight.dir;
+             rayToLight.p0 = hit.P + vec3(0.9f)* rayToLight.dir;
             float dist = glm::sqrt(glm::pow((lightPos.x - hit.P.x), 2) +
                                    glm::pow((lightPos.y - hit.P.y), 2) +
                                    glm::pow((lightPos.z - hit.P.z), 2));
@@ -162,7 +162,7 @@ glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_d
         {
             //ray2.p0 = hit.P;
             ray2.dir = 2.0f * glm::dot(hit.N, hit.V) * hit.N - hit.V;
-            ray2.p0 = hit.P + vec3(0.1f) * ray2.dir;
+            ray2.p0 = hit.P + vec3(0.6f) * ray2.dir;
             hit2 = Intersect(ray2, scene);
             glm::vec3 comp = FindColor(hit2, scene, recursion_depth - 1);
             color = color + comp;
