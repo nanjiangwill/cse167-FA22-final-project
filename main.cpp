@@ -51,9 +51,6 @@ void initialize(void){
     // Initialize scene
     scene.init();
     image.init();
-    // for (int i = 0; i < width * height;i++){
-    //     image.pixels[i] = glm::vec3(1,0,0);
-    // }
     rtscene.init();
      rtscene.camera->zoom(0.19f);
     rtscene.camera->rotateRight(10.0f);
@@ -64,29 +61,12 @@ void initialize(void){
     // Enable depth test
     glEnable(GL_DEPTH_TEST);  
 }
-// void Imagedisplay(void)
-// {
-//     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//     // if(!imageMode){
-//     //    scene.draw();
-//     // }
-//     // else{
-//     //   image.draw();
-//     // }
-//     image.draw();
-//     glutSwapBuffers();
-//     glFlush();
-// }
+
 void display(void){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     image.draw();
 
-
-    // glutSwapBuffers();
-    // glFlush();
-    //image.draw();
     glutSwapBuffers();
     glFlush();
     

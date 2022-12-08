@@ -70,16 +70,10 @@ void RTScene::buildTriangleSoup(void){
             /**
              * TODO: (HW3 hint: you should do something here)
              */
-
-            // shader->modelview = cur_VM * cur->modeltransforms[i]; // TODO: HW3: Without updating cur_VM, modelview would just be camera's view matrix.
-            // shader->material = (cur->models[i])->material;
-            // glm::mat4 curRTModelView = cur_VM * cur->modeltransforms[i]; // TODO: HW3: Without updating cur_VM, modelview would just be camera's view matrix.
-            // Material * cuRTMaterial= cur->models[i]->material;
-            // glm::mat3 TransRTModelViewer = glm::inverse(glm::transpose(mat3(curRTModelView)));
             glm::mat4 curModelView = cur_VM * cur->modeltransforms[i];
             glm::mat3 invTransMV = glm::inverse(glm::transpose(mat3(curModelView)));
             Material *curMaterial = cur->models[i]->material;
-             std::vector<Triangle> triangleElement = cur->models[i]->geometry->elements;
+            std::vector<Triangle> triangleElement = cur->models[i]->geometry->elements;
             // cout << "triangleElement size is " << triangleElement.size() << endl;
             for (int i = 0; i < triangleElement.size(); i++)
             {
