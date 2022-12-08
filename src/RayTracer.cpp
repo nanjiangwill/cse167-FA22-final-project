@@ -124,8 +124,8 @@ glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_d
             glm::vec4 lightPos = lightPositions[i];
             Ray rayToLight;
     
-            rayToLight.dir = glm::normalize(glm::vec3(lightPos - glm::vec4(hit.P, 1)));       
-             rayToLight.p0 = hit.P + vec3(0.9f)* rayToLight.dir;
+            rayToLight.dir = glm::normalize(glm::vec3(lightPos - glm::vec4(hit.P, 1)));
+            rayToLight.p0 = hit.P + vec3(0.9f) * rayToLight.dir;
             float dist = glm::sqrt(glm::pow((lightPos.x - hit.P.x), 2) +
                                    glm::pow((lightPos.y - hit.P.y), 2) +
                                    glm::pow((lightPos.z - hit.P.z), 2));
@@ -140,7 +140,7 @@ glm::vec3 RayTracer::FindColor(Intersection hit, RTScene* scene, int recursion_d
 
                 if (recursion_depth == 0)
                 {
-                    glm::vec3 tmp = glm::normalize(lightPosDir + glm::normalize(-hit.N));
+                    glm::vec3 tmp = glm::normalize(lightPosDir + glm::normalize(hit.V));
                     glm::vec3 C_specular = glm::vec3(m->specular) * glm::pow(glm::max(glm::dot(hit.N, tmp), 0.0f), m->shininess);
                     curColor += C_specular;
                 }
